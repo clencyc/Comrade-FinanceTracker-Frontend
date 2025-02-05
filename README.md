@@ -13,7 +13,7 @@ Make sure you have the following installed:
 
 1. **Clone the repository:**
     ```sh
-    git clone https://github.com/your-username/Comrade-FinanceTracker-Frontend.git
+    git clone https://github.com/clencyc/Comrade-FinanceTracker-Frontend.git
     ```
 
 2. **Navigate to the project directory:**
