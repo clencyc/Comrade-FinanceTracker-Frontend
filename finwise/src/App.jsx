@@ -10,12 +10,12 @@ function App() {
 
   return (
     <>
-    <Navbar />
-    <Hero />
-    <Process />
-    <Testimonials />
-    <CTASection />
-    <Footer />
+      <Navbar />
+      <Hero />
+      <Process />
+      <Testimonials />
+      <CTASection />
+      <Footer />
     </>
   )
 }

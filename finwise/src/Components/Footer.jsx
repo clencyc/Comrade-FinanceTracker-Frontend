@@ -12,13 +12,9 @@ const Footer = () => {
         <a href="#" className="text-gray-600 hover:text-gray-900 text-sm">Legal</a>
         <a href="#" className="text-gray-600 hover:text-gray-900 text-sm">Recalls</a>
       </div>
-
-      {/* Middle - Copyright */}
       <div className="text-gray-600 text-sm">
         © 2024 Copyright FundFlo
       </div>
-
-      {/* Right side - Social Links */}
       <div className="flex gap-6 items-center">
         <a href="#" className="text-gray-600 hover:text-gray-900">
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
