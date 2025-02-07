@@ -13,7 +13,7 @@ const Footer = () => {
         <a href="#" className="text-gray-600 hover:text-gray-900 text-sm">Recalls</a>
       </div>
       <div className="text-gray-600 text-sm">
-        © 2024 Copyright FundFlo
+        © 2024 Copyright FinWise
       </div>
       <div className="flex gap-6 items-center">
         <a href="#" className="text-gray-600 hover:text-gray-900">
