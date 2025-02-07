@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Element } from "react-scroll";
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 
 const Testimonials = () => {
@@ -50,6 +51,7 @@ const Testimonials = () => {
     };
 
     return (
+        <Element name="testimonials">
         <div className="w-full bg-gradient-to-br from-black via-gray-900 to-black py-16 md:py-24 px-4 relative overflow-hidden">
             <div className="max-w-6xl mx-auto">
                 <h2 className="text-3xl md:text-5xl text-gray-400 font-semibold text-center mb-16">
@@ -127,6 +129,7 @@ const Testimonials = () => {
                 </div>
             </div>
         </div>
+        </Element>
     );
 };
 

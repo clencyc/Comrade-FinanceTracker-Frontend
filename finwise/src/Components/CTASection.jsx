@@ -1,7 +1,9 @@
 import { ArrowRight } from "lucide-react";
+import { Element } from "react-scroll";
 
 const CTASection = () => {
   return (
+    <Element name="cta">
     <div className="w-full bg-black py-20 px-4">
       <div className="max-w-4xl mx-auto text-center space-y-8">
         <div className="w-16 h-16 bg-[#4AFF52] rounded-full flex items-center justify-center mx-auto mb-10">
@@ -25,6 +27,7 @@ const CTASection = () => {
         </button>
       </div>
     </div>
+    </Element>
   );
 };
 

@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import { Element } from "react-scroll";
 const Process = () => {
     const steps = [
         {
@@ -15,6 +16,7 @@ const Process = () => {
         }
     ];
     return (
+        <Element name="process">
         <div className='w-full bg-gradient-to-br from-black via-gray-900 to-black pt-10 py-10 px-6'>
             <div className=" bg-[#DFDFD8] rounded-[32px] mx-20 my-10 py-14 md:p-16">
                 <div className="max-w-6xl mx-auto space-y-14">
@@ -69,6 +71,7 @@ const Process = () => {
                 </div>
             </div>
         </div>
+        </Element>
     )
 }
 

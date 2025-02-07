@@ -1,7 +1,8 @@
 import { ArrowRight } from 'lucide-react';
-
+import { Element } from "react-scroll";
 const Hero = () => {
   return (
+    <Element name="hero">
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black pt-20 px-6">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
         <div className="space-y-10 ">
@@ -53,6 +54,7 @@ const Hero = () => {
         </div>
       </div>
     </div>
+    </Element>
   );
 };
 
