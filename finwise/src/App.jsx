@@ -1,22 +1,11 @@
-import CTASection from "./Components/CTASection"
-import Footer from "./Components/Footer"
-import Hero from "./Components/Hero"
-import Navbar from "./Components/Navbar"
-import Process from "./Components/Process"
-import Testimonials from "./Components/Testimonials"
+
+import Home from "./Pages/Home"
 
 
 function App() {
 
   return (
-    <>
-      <Navbar />
-      <Hero />
-      <Process />
-      <Testimonials />
-      <CTASection />
-      <Footer />
-    </>
+    <Home />
   )
 }
 
