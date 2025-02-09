@@ -1,152 +1,137 @@
-import { useState } from 'react';
-import { DollarSign, Tag, FileText } from 'lucide-react';
+import { useState, useEffect } from "react";
 
-const ExpenseForm = () => {
+const ExpenseForm = ({ initialData = null, onClose, setExpenses }) => {
   const [formData, setFormData] = useState({
-    amount: '',
-    category: '',
-    description: ''
+    amount: "",
+    category: "",
+    description: "",
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!setExpenses || typeof setExpenses !== "function") {
+      console.error("setExpenses is not provided!");
+      return;
+    }
+
     setLoading(true);
-    setError('');
-    setSuccess(false);
+    setMessage(null);
+    setError(null);
+
+    const method = initialData ? "PUT" : "POST";
+    const url = initialData
+      ? `http://localhost:8000/api/expenses/${initialData.id}/`
+      : "http://localhost:8000/api/expenses/";
 
     try {
-      const response = await fetch('/api/expenses/', {  // Replace with your actual API endpoint
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to submit expense');
-      }
+      if (!response.ok) throw new Error("Failed to submit expense");
 
-      setSuccess(true);
-      setFormData({
-        amount: '',
-        category: '',
-        description: ''
-      });
+      const updatedExpense = await response.json();
+
+      setExpenses((prev) =>
+        initialData
+          ? prev.map((exp) => (exp.id === updatedExpense.id ? updatedExpense : exp))
+          : [...prev, updatedExpense]
+      );
+
+      setMessage(initialData ? "Expense updated successfully!" : "✅ Expense added successfully!");
+
+      if (!initialData) setFormData({ amount: "", category: "", description: "" });
+
+      setTimeout(() => {
+        setMessage(null);
+        onClose();
+      }, 2000);
     } catch (err) {
-      setError(err.message);
+      setError("❌ An error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <>
-    <div className="w-full h-[90vh] max-w-md mx-auto p-4 sm:p-6 md:p-8 bg-white rounded-xl shadow-lg">
-      <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800 text-center">
-        Add New Expense
+    <div className="w-full max-w-md mx-auto p-4 bg-white rounded-xl shadow-lg">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
+        {initialData ? "Edit Expense" : "Add New Expense"}
       </h2>
-      
+
+      {error && <p className="text-red-600 text-center">{error}</p>}
+      {message && <p className="text-green-600 text-center">{message}</p>}
+
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Amount Field */}
-        <div className="relative">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Amount
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <DollarSign className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-              type="number"
-              name="amount"
-              value={formData.amount}
-              onChange={handleChange}
-              step="0.01"
-              required
-              className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
-              placeholder="0.00"
-            />
-          </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Amount</label>
+          <input
+            type="number"
+            name="amount"
+            value={formData.amount}
+            onChange={handleChange}
+            step="0.01"
+            required
+            className="w-full p-2 border border-gray-300 rounded-lg"
+            placeholder="Enter amount"
+          />
         </div>
 
-        {/* Category Field */}
-        <div className="relative">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Category
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Tag className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-              type="text"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              required
-              maxLength={50}
-              className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
-              placeholder="Enter category"
-            />
-          </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Category</label>
+          <input
+            type="text"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border border-gray-300 rounded-lg"
+            placeholder="Enter category"
+          />
         </div>
 
-        {/* Description Field */}
-        <div className="relative">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Description
-          </label>
-          <div className="relative">
-            <div className="absolute top-3 left-3">
-              <FileText className="h-5 w-5 text-gray-400" />
-            </div>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
-              rows="3"
-              placeholder="Enter description (optional)"
-            />
-          </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Description</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+            rows="3"
+            placeholder="Enter description"
+          />
         </div>
 
-        {/* Error Message */}
-        {error && (
-          <div className="text-red-500 text-sm mt-2 text-center">{error}</div>
-        )}
-
-        {/* Success Message */}
-        {success && (
-          <div className="text-green-500 text-sm mt-2 text-center">
-            Expense added successfully!
-          </div>
-        )}
-
-        {/* Submit Button */}
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] transition-all duration-200 font-medium text-lg"
+          className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-500"
         >
-          {loading ? 'Adding...' : 'Add Expense'}
+          {loading ? "Saving..." : initialData ? "Update Expense" : "Add Expense"}
         </button>
       </form>
     </div>
-    </>
   );
 };
 

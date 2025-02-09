@@ -1,16 +1,27 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import ExpenseForm from "./Pages/ExpenseForm";
-import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
+import Dashboard from "./Pages/Dashboard";
+import Services from "./Pages/Services";
+import Payments from "./Pages/Payments";
+import Layout from "./Components/Layout";
 
 function App() {
   return (
     <Router>
-      <Navbar />
       <Routes>
+        {/* Routes WITHOUT Sidebar */}
         <Route path="/" element={<Home />} />
-        <Route path="/expense-form" element={<ExpenseForm/>}/>
+        <Route path="/expense-form" element={<ExpenseForm />} />
+
+        {/* Routes WITH Sidebar (Dashboard, Payments, Services) */}
+        <Route path="/" element={<Layout />}>
+          
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="services" element={<Services />} />
+          <Route path="payments" element={<Payments />} />
+        </Route>
       </Routes>
       <Footer />
     </Router>
