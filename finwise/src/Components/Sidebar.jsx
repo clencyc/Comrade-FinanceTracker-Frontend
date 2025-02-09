@@ -40,6 +40,17 @@ const Sidebar = () => {
               <CreditCard size={20} /> Payments
             </NavLink>
           </li>
+          <li>
+            <NavLink 
+              to="/ai-books" 
+              className={({ isActive }) => 
+                `flex items-center gap-3 px-4 py-2 rounded-lg transition 
+                ${isActive ? "bg-teal-500" : "hover:bg-gray-700"}`
+              }
+            >
+              <CreditCard size={20} /> AI Book Recommendation
+            </NavLink>
+          </li>
         </ul>
       </nav>
     </aside>

@@ -6,6 +6,7 @@ import Dashboard from "./Pages/Dashboard";
 import Services from "./Pages/Services";
 import Payments from "./Pages/Payments";
 import Layout from "./Components/Layout";
+import AIBooks from "./Pages/AIBooks";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="services" element={<Services />} />
           <Route path="payments" element={<Payments />} />
+          <Route path="ai-books" element={<AIBooks /> } />
         </Route>
       </Routes>
       <Footer />
