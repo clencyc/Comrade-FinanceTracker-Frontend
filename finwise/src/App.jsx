@@ -7,6 +7,7 @@ import Services from "./Pages/Services";
 import Payments from "./Pages/Payments";
 import Layout from "./Components/Layout";
 import AIBooks from "./Pages/AIBooks";
+import ChatBot from "./Pages/ChatBot";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="services" element={<Services />} />
           <Route path="payments" element={<Payments />} />
           <Route path="ai-books" element={<AIBooks /> } />
+          <Route path="chat" element={<ChatBot />} />
         </Route>
       </Routes>
       <Footer />
